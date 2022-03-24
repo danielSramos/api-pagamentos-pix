@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.api.pixAPI.controller.dto.CreateUser;
 import br.com.api.pixAPI.model.User;
 import br.com.api.pixAPI.repository.UserRepository;
 
@@ -22,18 +23,21 @@ public class UserController {
 	private UserRepository userRepository;
 	
 	@GetMapping("/list")
-	public List<User> buscarTodos() {
+	public List<User> findAll() {
 		return userRepository.findAll();
-	}
-
-	@PostMapping("/new")
-	public User create(@RequestBody User user) {
-		return userRepository.save(user);
 	}
 
 	@GetMapping(value = "/list/{id}")
 	public Optional<User> findById(@PathVariable("id") Long id) {
 		return userRepository.findById(id);
+	}
+	
+	@PostMapping("/new")
+	public User create(@RequestBody CreateUser request) {
+		
+		User newUser = request.toUser();
+
+		return userRepository.save(newUser);
 	}
 
 }

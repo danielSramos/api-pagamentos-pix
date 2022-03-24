@@ -17,5 +17,5 @@ public interface PixKeyRepository extends JpaRepository<PixKey, Long> {
 
 	@Query("select p from PixKey p where pixKey = :pixKey")
 	public List<PixKey> findPixKey(Long pixKey);
-
+	
 }

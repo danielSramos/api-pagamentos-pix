@@ -1,17 +1,18 @@
 package br.com.api.pixAPI.controller.dto;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import br.com.api.pixAPI.model.User;
 
-public class UserDto {
+public class CreateUser {
 
 	private String name;
 	private String email;
 	private String phone;
 
-	public UserDto(User user) {
+	public CreateUser() {
+		
+	}
+	
+	public CreateUser(User user) {
 		this.name = user.getName();
 		this.email = user.getEmail();
 		this.phone = user.getPhone();
@@ -41,7 +42,19 @@ public class UserDto {
 		this.phone = phone;
 	}
 
-	public static List<UserDto> convert(List<User> user) {
-		return user.stream().map(UserDto::new).collect(Collectors.toList());
+	public User toUser() {
+		
+		User user = new User();
+		
+		user.setName(this.name);
+		user.setEmail(this.email);
+		user.setPhone(this.phone);
+
+		return user;
+		
 	}
+
+//	public static List<CreateUser> convert(List<User> user) {
+//		return user.stream().map(CreateUser::new).collect(Collectors.toList());
+//	}
 }
