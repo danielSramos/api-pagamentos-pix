@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.api.pixAPI.controller.dto.CreatePixKey;
@@ -24,7 +23,7 @@ import br.com.api.pixAPI.repository.UserRepository;
 @RestController
 @RequestMapping("pix")
 @ResponseBody
-@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+
 public class PixKeyController {
 
 	@Autowired
@@ -45,20 +44,29 @@ public class PixKeyController {
 	}
 
 	@PostMapping("/new")
-	public PixKey create(@RequestBody CreatePixKey request) {
+	public ResponseEntity<String> create(@RequestBody CreatePixKey request) {
 
 		Optional<User> searchedUser = userRepository.findById(request.getUserId());
 		
 
 		if (!searchedUser.isPresent()) {
 			System.out.println("usuario nao encontrado");
-			return null;
+			
+			return new ResponseEntity<String> ("Usuário não encontrado", HttpStatus.BAD_REQUEST);
+			
+//			return null;
 		} else {
 			
-			List<PixKey> searchedPixKey = pixKeyRepository.findPixKey(request.getKey());
+			Optional<PixKey> searchedPixKey = pixKeyRepository.findPixKey(request.getKey());
 			if (!searchedPixKey.isEmpty()) {
 				System.out.println("Chave já existe!!!");
-				return null;
+				
+				return new ResponseEntity<String>("Chave pix já existe!!!", HttpStatus.BAD_REQUEST);
+				
+//				return null;
+			} else if (pixKeyRepository.pixKeyCount(searchedUser.get().getId()) >= 3) {
+				System.out.println("Maximo de chaves cadastradas atingido, delete alguma chave para cadastrar outra nova");
+				return new ResponseEntity<String>("Maximo de chaves cadastradas atingido, delete alguma chave para cadastrar outra nova", HttpStatus.BAD_REQUEST);
 			} else {
 				User user = searchedUser.get();
 
@@ -66,54 +74,25 @@ public class PixKeyController {
 
 				newPixkey.setUser(user);
 
-				return pixKeyRepository.save(newPixkey);
+				String newPixKeyCreated = newPixkey.toString();
+				
+				pixKeyRepository.save(newPixkey);
+				
+				return new ResponseEntity<String>(newPixKeyCreated, HttpStatus.OK);
+				
+//				return pixKeyRepository.save(newPixkey);
 			}
 
 		}
 	}
-	
-	@GetMapping("/test")
-	public ResponseEntity<User> teste() {
-		
-		
-		User user = new User();
-		
-		user.setName("Daniel");
-		user.setEmail("daniel@email");
-		user.setPhone("84747383");
-		
-		return new ResponseEntity<User>(user, HttpStatus.OK);
-		
+
+	@GetMapping("/test/{id}")
+	public ResponseEntity<Integer> teste(@PathVariable("id") Long id) {
+
+		Integer pixKeyCount = pixKeyRepository.pixKeyCount(id);
+
+		return new ResponseEntity<Integer>(pixKeyCount, HttpStatus.OK);
+
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

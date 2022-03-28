@@ -71,4 +71,9 @@ public class PixKey {
 		this.user = user;
 	}
 
+	@Override
+	public String toString() {
+		return "Chave pix criada: [id de usuario: " + user.getId() + ", Chave Pix: " + pixKey + ", usuário: " + user.getName() + ", email: " + user.getEmail() + "]";
+	}
+
 }

@@ -41,7 +41,7 @@ public class User {
 		this.phone = phone;
 		this.email = email;
 	}
-
+	
 	public Double getValue() {
 		return value;
 	}

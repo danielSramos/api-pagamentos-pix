@@ -18,9 +18,11 @@ public class Transaction {
 	private Double value;
 	
 	@OneToOne
+	//@JsonIgnore
 	private User user;
 
 	@OneToOne
+	//@JsonIgnore
 	private PixKey pixKey;
 	
 	public Transaction() {
