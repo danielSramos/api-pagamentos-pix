@@ -1,11 +1,9 @@
 package br.com.api.pixAPI.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import java.util.Optional;
 
 @Entity
 @Table(name = "transactions")
@@ -14,31 +12,14 @@ public class Transaction {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
 	private Double value;
-	
-	@OneToOne
-	//@JsonIgnore
-	private User user;
+	private Long sendPixKey;
+	private Long receiverPixKey;
 
-	@OneToOne
-	//@JsonIgnore
-	private PixKey pixKey;
-	
-	public Transaction() {
-
-	}
-
-	public Transaction(Double value, User user, PixKey pixKey) {
-		this.value = value;
-		this.user = user;
-		this.pixKey = pixKey;
-	}
-	
 	public Long getId() {
 		return id;
 	}
- 
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -51,20 +32,19 @@ public class Transaction {
 		this.value = value;
 	}
 
-	public User getUser() {
-		return user;
+	public Long getSendPixKey() {
+		return sendPixKey;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setSendPixKey(Long sendPixKey) {
+		this.sendPixKey = sendPixKey;
 	}
 
-	public PixKey getPixKey() {
-		return pixKey;
+	public Long getReceiverPixKey() {
+		return receiverPixKey;
 	}
 
-	public void setPixKey(PixKey pixKey) {
-		this.pixKey = pixKey;
+	public void setReceiverPixKey(Long receiverPixKey) {
+		this.receiverPixKey = receiverPixKey;
 	}
-
 }

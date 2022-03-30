@@ -26,27 +26,6 @@ public class PixKey {
 	@JsonIgnore
 	private User user;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-	@JsonIgnore
-	private List<Transaction> transactions;
-
-	public PixKey() {
-		
-	}
-	
-	public PixKey(Long pixKey, User user) {
-		this.pixKey = pixKey;
-		this.user = user;
-	}
-
-	public List<Transaction> getTransactions() {
-		return transactions;
-	}
-
-	public void setTransactions(List<Transaction> transactions) {
-		this.transactions = transactions;
-	}
-
 	public Long getId() {
 		return id;
 	}

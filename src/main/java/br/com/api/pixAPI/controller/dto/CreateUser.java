@@ -53,8 +53,4 @@ public class CreateUser {
 		return user;
 		
 	}
-
-//	public static List<CreateUser> convert(List<User> user) {
-//		return user.stream().map(CreateUser::new).collect(Collectors.toList());
-//	}
 }

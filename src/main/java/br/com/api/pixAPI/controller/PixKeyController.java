@@ -47,7 +47,6 @@ public class PixKeyController {
 	public ResponseEntity<String> create(@RequestBody CreatePixKey request) {
 
 		Optional<User> searchedUser = userRepository.findById(request.getUserId());
-		
 
 		if (!searchedUser.isPresent()) {
 			System.out.println("usuario nao encontrado");
@@ -79,20 +78,9 @@ public class PixKeyController {
 				pixKeyRepository.save(newPixkey);
 				
 				return new ResponseEntity<String>(newPixKeyCreated, HttpStatus.OK);
-				
-//				return pixKeyRepository.save(newPixkey);
 			}
 
 		}
-	}
-
-	@GetMapping("/test/{id}")
-	public ResponseEntity<Integer> teste(@PathVariable("id") Long id) {
-
-		Integer pixKeyCount = pixKeyRepository.pixKeyCount(id);
-
-		return new ResponseEntity<Integer>(pixKeyCount, HttpStatus.OK);
-
 	}
 
 }

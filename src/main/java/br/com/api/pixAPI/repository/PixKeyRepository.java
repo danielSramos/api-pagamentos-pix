@@ -19,5 +19,6 @@ public interface PixKeyRepository extends JpaRepository<PixKey, Long> {
 	
 	@Query("select count(p.pixKey) from PixKey p where p.user.id = :id")
 	public Integer pixKeyCount(Long id);
-	
+
+
 }

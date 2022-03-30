@@ -1,42 +1,51 @@
 package br.com.api.pixAPI.controller.dto;
 
+import br.com.api.pixAPI.model.Transaction;
+
 public class NewTransaction {
 
-	private Long transactionId;
-	private Long userId;
-	private Long pixKey;
-	private Double value;
+    private Long transactionId;
+    private Long receiverPixId;
+    private Long sendPixId;
+    private Double value;
 
-	public Long getTransactionId() {
-		return transactionId;
-	}
+    public Long getTransactionId() {
+        return transactionId;
+    }
 
-	public void setTransactionId(Long transactionId) {
-		this.transactionId = transactionId;
-	}
+    public void setTransactionId(Long transactionId) {
+        this.transactionId = transactionId;
+    }
 
-	public Long getUserId() {
-		return userId;
-	}
+    public Long getReceiverPixId() {
+        return receiverPixId;
+    }
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
+    public void setReceiverPixId(Long receiverPixId) {
+        this.receiverPixId = receiverPixId;
+    }
 
-	public Long getPixKey() {
-		return pixKey;
-	}
+    public Long getSendPixId() {
+        return sendPixId;
+    }
 
-	public void setPixKey(Long pixKey) {
-		this.pixKey = pixKey;
-	}
+    public void setSendPixId(Long sendPixId) {
 
-	public Double getValue() {
-		return value;
-	}
+        this.sendPixId = sendPixId;
+    }
 
-	public void setValue(Double value) {
-		this.value = value;
-	}
-	
+    public Double getValue() {
+        return value;
+    }
+
+    public void setValue(Double value) {
+        this.value = value;
+    }
+
+   /* public Transaction toTransaction() {
+        Transaction transaction = new Transaction();
+
+        transaction.set
+    }
+*/
 }

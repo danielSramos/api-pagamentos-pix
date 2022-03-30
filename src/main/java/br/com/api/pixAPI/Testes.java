@@ -1,18 +1,20 @@
 package br.com.api.pixAPI;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.util.Arrays;
 import java.util.List;
 
+@RestController
+@RequestMapping("teste")
 public class Testes {
 
-	public static void main(String[] args) {
-		
-		List<Integer> itens = Arrays.asList(1,2,3,4,5,6);
-		
-		itens.forEach(item -> {
-			if(item == 4) System.out.println(item);
-		});
-		
+	@GetMapping("/test")
+	public ResponseEntity test() {
+		return new ResponseEntity("Classe de teste", HttpStatus.OK);
 	}
-
 }
