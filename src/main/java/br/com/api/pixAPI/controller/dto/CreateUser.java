@@ -7,16 +7,6 @@ public class CreateUser {
 	private String name;
 	private String email;
 	private String phone;
-
-	public CreateUser() {
-		
-	}
-	
-	public CreateUser(User user) {
-		this.name = user.getName();
-		this.email = user.getEmail();
-		this.phone = user.getPhone();
-	}
 	
 	public String getName() {
 		return name;

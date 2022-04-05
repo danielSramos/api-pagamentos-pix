@@ -4,34 +4,24 @@ import br.com.api.pixAPI.model.Transaction;
 
 public class NewTransaction {
 
-    private Long transactionId;
-    private Long receiverPixId;
-    private Long sendPixId;
+    private Long receiverId;
+    private Long sendId;
     private Double value;
 
-    public Long getTransactionId() {
-        return transactionId;
+    public Long getReceiverId() {
+        return receiverId;
     }
 
-    public void setTransactionId(Long transactionId) {
-        this.transactionId = transactionId;
+    public void setReceiverId(Long receiverId) {
+        this.receiverId = receiverId;
     }
 
-    public Long getReceiverPixId() {
-        return receiverPixId;
+    public Long getSendId() {
+        return sendId;
     }
 
-    public void setReceiverPixId(Long receiverPixId) {
-        this.receiverPixId = receiverPixId;
-    }
-
-    public Long getSendPixId() {
-        return sendPixId;
-    }
-
-    public void setSendPixId(Long sendPixId) {
-
-        this.sendPixId = sendPixId;
+    public void setSendId(Long sendId) {
+        this.sendId = sendId;
     }
 
     public Double getValue() {
@@ -41,11 +31,4 @@ public class NewTransaction {
     public void setValue(Double value) {
         this.value = value;
     }
-
-   /* public Transaction toTransaction() {
-        Transaction transaction = new Transaction();
-
-        transaction.set
-    }
-*/
 }

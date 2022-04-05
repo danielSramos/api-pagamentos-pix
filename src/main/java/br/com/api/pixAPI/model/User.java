@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -21,6 +22,14 @@ public class User {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	@JsonIgnore
 	private List<PixKey> pixKey;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sendUsers")
+	@JsonIgnore
+	private List<Transaction> sendTransactions;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "receiverUsers")
+	@JsonIgnore
+	private List<Transaction> receiverTransactions;
 
 	public Long getId() {
 		return id;
@@ -70,4 +79,19 @@ public class User {
 		this.pixKey = pixKey;
 	}
 
+	public List<Transaction> getSendTransactions() {
+		return sendTransactions;
+	}
+
+	public void setSendTransactions(List<Transaction> sendTransactions) {
+		this.sendTransactions = sendTransactions;
+	}
+
+	public List<Transaction> getReceiverTransactions() {
+		return receiverTransactions;
+	}
+
+	public void setReceiverTransactions(List<Transaction> receiverTransactions) {
+		this.receiverTransactions = receiverTransactions;
+	}
 }

@@ -3,6 +3,7 @@ package br.com.api.pixAPI.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Optional;
 
 @Entity
@@ -13,8 +14,16 @@ public class Transaction {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Double value;
-	private Long sendPixKey;
-	private Long receiverPixKey;
+
+	@ManyToOne
+	@JoinColumn(name = "sendUser_id")
+	@JsonIgnore
+	private User sendUsers;
+
+	@ManyToOne
+	@JoinColumn(name = "receiverUser_id")
+	@JsonIgnore
+	private User receiverUsers;
 
 	public Long getId() {
 		return id;
@@ -32,19 +41,19 @@ public class Transaction {
 		this.value = value;
 	}
 
-	public Long getSendPixKey() {
-		return sendPixKey;
+	public User getSendUsers() {
+		return sendUsers;
 	}
 
-	public void setSendPixKey(Long sendPixKey) {
-		this.sendPixKey = sendPixKey;
+	public void setSendUsers(User sendUsers) {
+		this.sendUsers = sendUsers;
 	}
 
-	public Long getReceiverPixKey() {
-		return receiverPixKey;
+	public User getReceiverUsers() {
+		return receiverUsers;
 	}
 
-	public void setReceiverPixKey(Long receiverPixKey) {
-		this.receiverPixKey = receiverPixKey;
+	public void setReceiverUsers(User receiverUsers) {
+		this.receiverUsers = receiverUsers;
 	}
 }

@@ -58,20 +58,22 @@ public class TransactionController {
 	@PostMapping("/transfer")
 	public ResponseEntity<Transaction> transfer(@RequestBody Transference request) {
 
-		Optional<User> sendUser = userRepository.findUserByPixKey(request.getSendPixKey());
-		Optional<User> receiverUser = userRepository.findUserByPixKey(request.getReceiverPixKey());
+		Optional<User> receiver = userRepository.findUserByPixKey(request.getReceiverPixKey());
+		Optional<User> send = userRepository.findById(request.getSendId());
+
 
 		Transaction transaction = new Transaction();
 
 		transaction.setValue(request.getValue());
-		transaction.setSendPixKey(request.getSendPixKey());
-		transaction.setReceiverPixKey(request.getReceiverPixKey());
+		transaction.setSendUsers(send.get());
+		transaction.setReceiverUsers(receiver.get());
 
-		sendUser.get().setValue(sendUser.get().getValue() - request.getValue());
-		receiverUser.get().setValue(receiverUser.get().getValue() + request.getValue());
+		send.get().setValue(send.get().getValue() - request.getValue());
+		receiver.get().setValue(receiver.get().getValue() + request.getValue());
+
 
 		transactionRepository.save(transaction);
 
-		return new ResponseEntity<Transaction>(transaction, HttpStatus.OK);
+		return new ResponseEntity<>(transaction, HttpStatus.OK);
 	}
 }

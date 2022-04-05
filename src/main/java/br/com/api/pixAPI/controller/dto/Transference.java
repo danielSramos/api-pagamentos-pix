@@ -5,16 +5,16 @@ import br.com.api.pixAPI.model.Transaction;
 
 public class Transference {
 
-    private Long sendPixKey;
+    private Long sendId;
     private Long receiverPixKey;
     private Double value;
 
-    public Long getSendPixKey() {
-        return sendPixKey;
+    public Long getSendId() {
+        return sendId;
     }
 
-    public void setSendPixKey(Long sendPixKey) {
-        this.sendPixKey = sendPixKey;
+    public void setSendId(Long sendId) {
+        this.sendId = sendId;
     }
 
     public Long getReceiverPixKey() {
