@@ -1,8 +1,5 @@
 package br.com.api.pixAPI.controller.dto;
 
-import br.com.api.pixAPI.model.PixKey;
-import br.com.api.pixAPI.model.Transaction;
-
 public class Transference {
 
     private Long sendId;

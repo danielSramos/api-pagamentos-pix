@@ -1,7 +1,5 @@
 package br.com.api.pixAPI.controller.dto;
 
-import br.com.api.pixAPI.model.Transaction;
-
 public class NewTransaction {
 
     private Long receiverId;

@@ -19,15 +19,15 @@ public class User {
 	private String email;
 	private Double value = 0.0;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<PixKey> pixKey;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sendUsers")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sendUsers", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Transaction> sendTransactions;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "receiverUsers")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "receiverUsers", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Transaction> receiverTransactions;
 

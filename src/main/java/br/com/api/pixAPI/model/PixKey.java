@@ -23,7 +23,7 @@ public class PixKey {
 	private Long pixKey;
 
 	@OneToOne
-	@JsonIgnore
+	//@JsonIgnore
 	private User user;
 
 	public Long getId() {
@@ -52,7 +52,7 @@ public class PixKey {
 
 	@Override
 	public String toString() {
-		return "Chave pix criada: [id de usuario: " + user.getId() + ", Chave Pix: " + pixKey + ", usuário: " + user.getName() + ", email: " + user.getEmail() + "]";
+		return "Chave pix criada: [Chave Pix: " + pixKey + ", usuário: " + user.getName() + "]";
 	}
 
 }
