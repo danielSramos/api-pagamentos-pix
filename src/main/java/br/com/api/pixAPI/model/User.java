@@ -1,11 +1,7 @@
 package br.com.api.pixAPI.model;
-
 import java.util.List;
-
 import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 
 @Entity
 @Table(name = "users")
