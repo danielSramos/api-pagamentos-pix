@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class PixKeyService {
 
@@ -18,38 +20,51 @@ public class PixKeyService {
     @Autowired
     private UserRepository userRepository;
 
-    public ResponseEntity list(Long id) {
+    public ResponseEntity list() {
+        return new ResponseEntity(pixKeyRepository.findAll(), HttpStatus.OK);
+    }
 
-        if (id == null) {
-            return new ResponseEntity(pixKeyRepository.findAll(), HttpStatus.OK);
+    public ResponseEntity findByKey(Long key) {
+        if (key == null) {
+            return new ResponseEntity("Id incorreto", HttpStatus.NOT_FOUND);
         }
-        if (!pixKeyRepository.findById(id).isPresent()) {
+
+        Optional<PixKey> user = pixKeyRepository.findByPixKey(key);
+        if (!user.isPresent()) {
             return new ResponseEntity("Chave não existe", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity(pixKeyRepository.findById(id), HttpStatus.OK);
+
+        return new ResponseEntity(user, HttpStatus.OK);
     }
 
     public ResponseEntity create(CreatePixKey request) {
+        Optional<User> user = userRepository.findById(request.getUserId());
+        Optional<PixKey> pixKey = pixKeyRepository.findByPixKey(request.getKey());
 
-        if (!userRepository.findById(request.getUserId()).isPresent()) {
+        if (!user.isPresent()) {
             return new ResponseEntity("Usuário não existe!", HttpStatus.NOT_FOUND);
         }
-        if (pixKeyRepository.findPixKey(request.getKey()).isPresent()) {
+
+        if (pixKey.isPresent()) {
             return new ResponseEntity("Chave já existe!!!", HttpStatus.BAD_REQUEST);
         }
+
         if (pixKeyRepository.pixKeyCount(request.getUserId()) >= 3) {
             String message = "Maximo de chaves atingido, delete uma chave para cadastar outra";
             return new ResponseEntity(message, HttpStatus.BAD_REQUEST);
         }
-        User user = userRepository.findById(request.getUserId()).get();
-        request.toPixKey().setUser(user);
+
         PixKey key = request.toPixKey();
-        key.setUser(user);
+        key.setUser(user.get());
         pixKeyRepository.save(key);
         return new ResponseEntity(key.toString(), HttpStatus.OK);
     }
 
     public ResponseEntity delete(Long id) {
+        if (id == null) {
+            return new ResponseEntity("Chave não existe", HttpStatus.NOT_FOUND);
+        }
+
         pixKeyRepository.deleteById(id);
         return new ResponseEntity("Chave deletada com sucesso!", HttpStatus.OK);
     }

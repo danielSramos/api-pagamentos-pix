@@ -1,6 +1,7 @@
 package br.com.api.pixAPI.controller.dto;
 
 import br.com.api.pixAPI.model.PixKey;
+
 import javax.validation.constraints.NotNull;
 
 public class CreatePixKey {

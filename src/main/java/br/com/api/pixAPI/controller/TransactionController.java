@@ -1,79 +1,35 @@
 package br.com.api.pixAPI.controller;
 
-import java.util.Optional;
-
 import br.com.api.pixAPI.controller.dto.Deposit;
 import br.com.api.pixAPI.controller.dto.Transference;
 import br.com.api.pixAPI.controller.dto.Withdraw;
-import br.com.api.pixAPI.model.PixKey;
+import br.com.api.pixAPI.controller.services.TransactionService;
 import br.com.api.pixAPI.model.Transaction;
-import br.com.api.pixAPI.repository.PixKeyRepository;
-import br.com.api.pixAPI.repository.TransactionRepository;
+import br.com.api.pixAPI.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import br.com.api.pixAPI.model.User;
-import br.com.api.pixAPI.repository.UserRepository;
-
-import javax.transaction.Transactional;
 
 @RestController
 @RequestMapping("transaction")
-@Transactional
 public class TransactionController {
 
-	@Autowired
-	private UserRepository userRepository;
+    @Autowired
+    private TransactionService transactionService;
 
-	@Autowired
-	private PixKeyRepository pixKeyRepository;
+    @PutMapping("/{id}/deposit")
+    public ResponseEntity<User> deposit(@PathVariable("id") Long id, @RequestBody Deposit request) {
+        return transactionService.deposit(id, request);
+    }
 
-	@Autowired
-	TransactionRepository transactionRepository;
+    @PutMapping("/{id}/withdraw")
+    public ResponseEntity<User> withdraw(@PathVariable("id") Long id, @RequestBody Withdraw request) {
+        return transactionService.withdraw(id, request);
+    }
 
-	@PutMapping("/deposit")
-	public ResponseEntity<User> deposit(@RequestBody Deposit request) {
-
-		Optional<User> finderUser = userRepository.findById(request.getUserId());
-		User user = finderUser.get();
-
-		user.setValue(user.getValue() + request.getValue());
-
-		return new ResponseEntity<User>(user, HttpStatus.OK);
-	}
-
-	@PutMapping("/withdraw")
-	public ResponseEntity<User> withdraw(@RequestBody Withdraw request) {
-
-		Optional<User> finderUser = userRepository.findById(request.getUserId());
-		User user = finderUser.get();
-
-		user.setValue(user.getValue() - request.getValue());
-
-		return new ResponseEntity<User>(user, HttpStatus.OK);
-	}
-
-	@PostMapping("/transfer")
-	public ResponseEntity<Transaction> transfer(@RequestBody Transference request) {
-
-		Optional<User> receiver = userRepository.findUserByPixKey(request.getReceiverPixKey());
-		Optional<User> send = userRepository.findById(request.getSendId());
-
-
-		Transaction transaction = new Transaction();
-
-		transaction.setValue(request.getValue());
-		transaction.setSendUsers(send.get());
-		transaction.setReceiverUsers(receiver.get());
-
-		send.get().setValue(send.get().getValue() - request.getValue());
-		receiver.get().setValue(receiver.get().getValue() + request.getValue());
-
-
-		transactionRepository.save(transaction);
-
-		return new ResponseEntity<>(transaction, HttpStatus.OK);
-	}
+    @PostMapping("/{id}")
+    public ResponseEntity<Transaction> transfer(@PathVariable("id") Long id, @RequestBody Transference request) {
+        return transactionService.transfer(id, request);
+    }
 }

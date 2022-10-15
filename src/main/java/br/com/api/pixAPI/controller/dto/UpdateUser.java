@@ -5,19 +5,10 @@ import javax.validation.constraints.Email;
 
 public class UpdateUser {
 
-    private Long userId;
     private String name;
     @Email(message = "{email.not.valid}")
     private String email;
     private String phone;
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
 
     public String getName() {
         return name;

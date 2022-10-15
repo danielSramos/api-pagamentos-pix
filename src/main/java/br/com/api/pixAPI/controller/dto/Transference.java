@@ -2,17 +2,8 @@ package br.com.api.pixAPI.controller.dto;
 
 public class Transference {
 
-    private Long sendId;
     private Long receiverPixKey;
     private Double value;
-
-    public Long getSendId() {
-        return sendId;
-    }
-
-    public void setSendId(Long sendId) {
-        this.sendId = sendId;
-    }
 
     public Long getReceiverPixKey() {
         return receiverPixKey;

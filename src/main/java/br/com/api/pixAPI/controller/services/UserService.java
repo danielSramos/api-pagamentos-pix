@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 
 @Service
 public class UserService {
@@ -16,31 +18,36 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public ResponseEntity findUser(Long id) {
+    public ResponseEntity list() {
+        return new ResponseEntity(userRepository.findAll(), HttpStatus.OK);
+    }
 
+    public ResponseEntity findById(Long id) {
         if (id == null) {
-            return new ResponseEntity(userRepository.findAll(), HttpStatus.OK);
+            return new ResponseEntity("ID obrigatorio", HttpStatus.BAD_REQUEST);
         }
-        if (!userRepository.findById(id).isPresent()) {
+        Optional<User> user = userRepository.findById(id);
+        if (!user.isPresent()) {
             return new ResponseEntity("Usuario não encontrado", HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity(userRepository.findById(id), HttpStatus.OK);
+        return new ResponseEntity(user.get(), HttpStatus.OK);
     }
 
     public User create(CreateUser user) {
         return userRepository.save(user.toUser());
     }
 
-    public ResponseEntity update(UpdateUser user) {
+    public ResponseEntity update(Long id, UpdateUser user) {
 
-        if (user.getUserId() == null) {
+        if (id == null) {
             return new ResponseEntity("Informe um ID de usuário", HttpStatus.BAD_REQUEST);
         }
-        if (!userRepository.findById(user.getUserId()).isPresent()) {
+        Optional<User> userById = userRepository.findById(id);
+        if (!userById.isPresent()) {
             return new ResponseEntity("Usuário não existe", HttpStatus.NOT_FOUND);
         }
-        User updateUser = userRepository.findById(user.getUserId()).get();
-        return new ResponseEntity(user.toUser(updateUser), HttpStatus.OK);
+        User updated = userRepository.save(user.toUser(userById.get()));
+        return new ResponseEntity(updated, HttpStatus.OK);
     }
 
     public ResponseEntity delete(Long id) {
@@ -54,5 +61,4 @@ public class UserService {
         userRepository.deleteById(id);
         return new ResponseEntity("Usuário deletado com sucesso!!", HttpStatus.OK);
     }
-
 }
