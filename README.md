@@ -1,5 +1,7 @@
 <h1>api-pagamentos-pix</h1>
 
+<h3>Em desenvolviemento</h3>
+
 <p>API REST para transações através de uma chave pix criada em Java com o framework Spring Boot. Essa API está sendo desenvolvida para aplicar e aprimorar os meus conhecimentos em Java com Spring.</p>
 
 <p>Algumas ferramentas que serão utilizadas:</p>
