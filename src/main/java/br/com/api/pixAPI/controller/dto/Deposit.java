@@ -1,14 +1,12 @@
 package br.com.api.pixAPI.controller.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Deposit {
+
     private Double value;
-
-    public Double getValue() {
-        return value;
-    }
-
-    public void setValue(Double value) {
-        this.value = value;
-    }
 
 }
