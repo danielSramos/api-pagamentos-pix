@@ -1,5 +1,8 @@
 package br.com.api.pixAPI.errors;
 
+import lombok.Getter;
+
+@Getter
 public class ErrorObject {
     private final String message;
     private final String field;
@@ -11,15 +14,4 @@ public class ErrorObject {
         this.parameter = parameter;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public String getField() {
-        return field;
-    }
-
-    public Object getParameter() {
-        return parameter;
-    }
 }

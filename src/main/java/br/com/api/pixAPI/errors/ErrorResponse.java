@@ -1,7 +1,10 @@
 package br.com.api.pixAPI.errors;
 
+import lombok.Getter;
+
 import java.util.List;
 
+@Getter
 public class ErrorResponse {
     private final String message;
     private final int code;
@@ -17,23 +20,4 @@ public class ErrorResponse {
         this.errors = errors;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public String getObjectName() {
-        return objectName;
-    }
-
-    public List<ErrorObject> getErrors() {
-        return errors;
-    }
 }
