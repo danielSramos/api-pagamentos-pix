@@ -17,6 +17,8 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private EmailService emailService;
 
     public ResponseEntity list() {
         return new ResponseEntity(userRepository.findAll(), HttpStatus.OK);
@@ -33,7 +35,9 @@ public class UserService {
         return new ResponseEntity(user.get(), HttpStatus.OK);
     }
 
-    public User create(CreateUser user) {
+    public User create(CreateUser user) throws Exception{
+        emailService.sendMail(user.toUser());
+        System.out.println("Usuário criado com sucesso e email enviado.");
         return userRepository.save(user.toUser());
     }
 

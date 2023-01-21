@@ -2,6 +2,7 @@ package br.com.api.pixAPI.controller;
 
 import br.com.api.pixAPI.controller.dto.CreateUser;
 import br.com.api.pixAPI.controller.dto.UpdateUser;
+import br.com.api.pixAPI.controller.services.EmailService;
 import br.com.api.pixAPI.controller.services.UserService;
 import br.com.api.pixAPI.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
     @GetMapping
     public ResponseEntity findAll() {
         return userService.list();
@@ -29,7 +29,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> create(@Valid @RequestBody CreateUser request) {
+    public ResponseEntity<User> create(@Valid @RequestBody CreateUser request) throws Exception{
         return new ResponseEntity<>(userService.create(request), HttpStatus.OK);
     }
 
